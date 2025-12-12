@@ -1,0 +1,37 @@
+{
+  "name": "bot-estoque",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^25.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@langchain/community": "^1.0.7",
+    "@langchain/core": "^1.1.4",
+    "@langchain/google-genai": "^2.0.4",
+    "@langchain/langgraph": "^1.0.4",
+    "@langchain/tavily": "^1.0.1",
+    "@types/express": "^5.0.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "langchain": "^1.1.5",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.28",
+    "yaml": "^2.8.2",
+    "yaml-loader": "^0.8.1",
+    "zod": "^4.1.13"
+  }
+}
