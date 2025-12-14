@@ -1,6 +1,6 @@
 import { HumanMessage } from "langchain";
-import  orchestratorAgent  from "../agents/orchestratorAgent.js";
-import AgentState from "../state.js";
+import  orchestratorAgent  from "../agents/orchestratorAgent";
+import AgentState from "../state";
 import * as z from "zod";
 
 async function orchestratorNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {

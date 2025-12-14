@@ -1,6 +1,6 @@
 import { HumanMessage } from "langchain";
-import  structurerAgent  from "../agents/structurerAgent.js";
-import AgentState from "../state.js";
+import  structurerAgent  from "../agents/structurerAgent";
+import AgentState from "../state";
 import * as z from "zod";
 
 async function structurerNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
@@ -11,12 +11,16 @@ async function structurerNode(state: z.infer<typeof AgentState>): Promise <z.inf
         ],
     });
 
-    const sqlInstruction = `Por favor, insira estas receitas na tabela 'recipes:\n${response.structuredResponse}`
+    const recipeData = response.structuredResponse;
+    const sqlInstruction = `Por favor, insira esta receita na tabela 'recipes':
+Nome: ${recipeData.name}
+Ingredientes: ${recipeData.ingredients}
+Modo de Preparo: ${recipeData.preparationMethod}`;
 
     return {
         ...state,
         userInput: sqlInstruction,
-        messages: messages.concat([new HumanMessage(sqlInstruction)]),
+        messages: messages.concat([new HumanMessage({content: sqlInstruction})]),
     };
 }
 

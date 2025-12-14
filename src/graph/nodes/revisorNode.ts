@@ -1,6 +1,6 @@
 import { SystemMessage, HumanMessage } from "langchain";
-import  revisorAgent  from "../agents/revisorAgent.js";
-import AgentState from "../state.js";
+import  revisorAgent  from "../agents/revisorAgent";
+import AgentState from "../state";
 import * as z from "zod";
 
 async function revisorNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {

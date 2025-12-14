@@ -1,5 +1,5 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { sqlTools } from "../tools/sqlTools.js";
+import { sqlTools } from "../tools/sqlTools";
 import {createAgent} from "langchain";
 import { readFileSync } from 'fs';
 import { parse } from "yaml";
@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/prompts/sql.yaml', 'utf-8');
+const promptFile = readFileSync('./src/graph/prompts/sql.yaml', 'utf-8');
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({

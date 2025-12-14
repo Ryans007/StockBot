@@ -1,6 +1,6 @@
 import {SystemMessage, HumanMessage, AIMessage} from "langchain";
-import  webAgent  from "../agents/webAgent.js";
-import AgentState from "../state.js";
+import  webAgent  from "../agents/webAgent";
+import AgentState from "../state";
 import * as z from "zod";
 
 async function webNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {

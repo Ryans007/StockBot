@@ -1,7 +1,7 @@
 import {tool} from "@langchain/core/tools";
 import {z} from "zod";
-import RecipeEntity from "../../entities/RecipeEntity.js";
-import {AppDataSource} from "../../config/dataSource.js";
+import RecipeEntity from "../../entities/RecipeEntity";
+import {AppDataSource} from "../../config/dataSource";
 
 const toAddRecipeTool = tool(
   async (input: { name: string; ingredients: string; preparationMethod: string } ) => {

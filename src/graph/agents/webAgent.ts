@@ -1,5 +1,5 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import webTool from "../tools/webTool.js";
+import webTool from "../tools/webTool";
 import {createAgent} from "langchain";
 import {readFileSync} from "node:fs";
 import {parse} from "yaml";
@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/prompts/structurer.yaml', 'utf-8')
+const promptFile = readFileSync('./src/graph/prompts/web.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({

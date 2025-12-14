@@ -1,6 +1,6 @@
 import { SystemMessage, HumanMessage, AIMessage } from "langchain";
-import  trivialAgent  from "../agents/trivialAgent.js";
-import AgentState from "../state.js";
+import  trivialAgent  from "../agents/trivialAgent";
+import AgentState from "../state";
 import * as z from "zod";
 
 async function trivialNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {

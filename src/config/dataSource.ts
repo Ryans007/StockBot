@@ -3,8 +3,8 @@ import path from "path";
 
 export const AppDataSource = new DataSource({
     type: "sqlite",
-    database: path.join(__dirname, "database.sqlite"),
+    database: "./src/config/database.sqlite",
     synchronize: true,
     logging: false,
-    entities: [path.join(__dirname, "..", "/entities/", "*.{ts,js}")],
+    entities: ["src/entities/**/*.ts"],
 });

@@ -5,9 +5,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "dev": "tsx src/app.ts",
     "start": "node dist/index.js",
-    "dev": "ts-node src/app.ts"
+    "build": "tsc"
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "compilerOptions": {
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "allowImportingTsExtensions": true,
+      "noEmit": true
+    }
   },
   "keywords": [],
   "author": "",
@@ -16,6 +26,7 @@
     "@types/dotenv": "^6.1.1",
     "@types/node": "^25.0.1",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {

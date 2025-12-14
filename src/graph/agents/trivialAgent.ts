@@ -6,12 +6,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/prompts/structurer.yaml', 'utf-8')
+const promptFile = readFileSync('./src/graph/prompts/trivial.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({
     model: "gemini-2.5-flash",
-    temperature: 0.7,
+    temperature: 0.5,
 })
 
 const TrivialAgent = createAgent({

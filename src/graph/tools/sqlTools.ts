@@ -1,5 +1,5 @@
 import {SqlDatabase} from "@langchain/classic/sql_db";
-import { AppDataSource } from "../../config/dataSource.js";
+import { AppDataSource } from "../../config/dataSource";
 import { DynamicTool } from "@langchain/core/tools";
 import { Tool } from "@langchain/core/tools";
 

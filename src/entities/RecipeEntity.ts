@@ -4,7 +4,7 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 export default class RecipeEntity {
     @PrimaryGeneratedColumn()
     id?: number;
-    @Column()
+    @Column("text")
     name: string;
     @Column("text")
     ingredients: string;

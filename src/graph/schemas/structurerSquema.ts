@@ -1,9 +1,9 @@
 import {z} from "zod";
 
 export const StructurerOutputSchema = z.object({
-    nome: z.string(),
-    ingredientes_necessarios: z.string(),
-    modo_preparo: z.string()
+    name: z.string(),
+    ingredients: z.string(),
+    preparationMethod: z.string()
 });
 
 export const StructurerOutputSchemaList = z.object({

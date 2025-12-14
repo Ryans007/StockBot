@@ -1,4 +1,4 @@
-import {StructurerOutputSchema} from "../schemas/structurerSquema.js";
+import {StructurerOutputSchema} from "../schemas/structurerSquema";
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
 import {createAgent} from "langchain";
 import {readFileSync} from "node:fs";
@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/prompts/structurer.yaml', 'utf-8')
+const promptFile = readFileSync('./src/graph/prompts/structurer.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({

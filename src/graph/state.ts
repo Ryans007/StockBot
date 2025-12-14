@@ -1,6 +1,4 @@
 import { BaseMessage } from "@langchain/core/messages";
-import { MessagesZodMeta } from "@langchain/langgraph";
-import { registry } from "@langchain/langgraph/zod";
 import * as z from "zod";
 
 const AgentState = z.object({

@@ -1,5 +1,5 @@
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {OrchestratorOutputSchema} from "../schemas/orchestratorSquema.js";
+import {OrchestratorOutputSchema} from "../schemas/orchestratorSquema";
 import {createAgent} from "langchain";
 import {readFileSync} from "node:fs";
 import {parse} from "yaml";
@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/prompts/orchestrator.yaml', 'utf-8')
+const promptFile = readFileSync('./src/graph/prompts/orchestrator.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({
