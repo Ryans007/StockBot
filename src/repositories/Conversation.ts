@@ -1,8 +1,8 @@
-import {ConversationInterfaceRepository} from "./interfaces/Conversation.ts";
+import { ConversationInterfaceRepository } from "./interfaces/Conversation.ts";
 import Conversation from "../entities/Conversation.ts";
-import {Repository} from "typeorm";
+import { Repository } from "typeorm";
 
-export class ConversationRepository implements ConversationInterfaceRepository {
+export default class ConversationRepository implements ConversationInterfaceRepository {
     private repository: Repository<Conversation>;
 
     constructor(repository: Repository<Conversation>) {

@@ -1,4 +1,4 @@
-import type { ConversationRepository } from "../repositories/Conversation";
+import type ConversationRepository from "../repositories/Conversation";
 import { Request, Response } from "express";
 import * as crypto from "crypto";
 import graph from "../graph/graph";
@@ -9,7 +9,7 @@ interface ChatRequest {
     thread_id?: string;
 }
 
-export class ConversationController {
+export default class ConversationController {
     constructor(private repository: ConversationRepository) { }
 
     async createConversation(res: Response, req: Request) {
