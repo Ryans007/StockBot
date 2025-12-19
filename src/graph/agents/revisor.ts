@@ -1,8 +1,8 @@
-import {RevisorOutputSchema} from "../schemas/revisor.ts";
-import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {createAgent} from "langchain";
-import {readFileSync} from "node:fs";
-import {parse} from "yaml";
+import { RevisorOutputSchema } from "../schemas/revisor.ts";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { createAgent } from "langchain";
+import { readFileSync } from "node:fs";
+import { parse } from "yaml";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,11 +15,11 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.3,
 })
 
-const revisor = createAgent({
+const revisorAgent = createAgent({
     model: llm,
     tools: [],
     systemPrompt: promptData.revisor_prompt,
     responseFormat: RevisorOutputSchema
 });
 
-export default revisor;
+export default revisorAgent;

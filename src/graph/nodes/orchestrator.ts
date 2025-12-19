@@ -1,13 +1,13 @@
 import { HumanMessage } from "langchain";
-import  orchestrator  from "../agents/orchestrator.ts";
+import orchestratorAgent from "../agents/orchestrator.ts";
 import AgentState from "../state";
 import * as z from "zod";
 
-async function orchestrator(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
+async function orchestrator(state: z.infer<typeof AgentState>): Promise<z.infer<typeof AgentState>> {
     const messages = state.messages
-    const response = await orchestrator.invoke({
+    const response = await orchestratorAgent.invoke({
         messages: [
-            new HumanMessage({content: state.userInput})
+            new HumanMessage({ content: state.userInput })
         ],
     });
 
@@ -15,7 +15,7 @@ async function orchestrator(state: z.infer<typeof AgentState>): Promise <z.infer
         ...state,
         nextAgent: response.structuredResponse.nextAgent,
         orchestratorExplanation: response.structuredResponse.orchestrationExplanation,
-        messages: messages.concat([new HumanMessage({content: state.userInput})]),
+        messages: messages.concat([new HumanMessage({ content: state.userInput })]),
     };
 }
 

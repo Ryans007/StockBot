@@ -1,7 +1,7 @@
-import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {createAgent} from "langchain";
-import {readFileSync} from "node:fs";
-import {parse} from "yaml";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { createAgent } from "langchain";
+import { readFileSync } from "node:fs";
+import { parse } from "yaml";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,10 +14,10 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.5,
 })
 
-const Trivial = createAgent({
+const trivialAgent = createAgent({
     model: llm,
     tools: [],
     systemPrompt: promptData.trivial_prompt,
 });
 
-export default Trivial;
+export default trivialAgent;

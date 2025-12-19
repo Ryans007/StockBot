@@ -1,8 +1,8 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import webTool from "../tools/webTool";
-import {createAgent} from "langchain";
-import {readFileSync} from "node:fs";
-import {parse} from "yaml";
+import { createAgent } from "langchain";
+import { readFileSync } from "node:fs";
+import { parse } from "yaml";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,10 +15,10 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.2,
 })
 
-const web = createAgent({
+const webAgent = createAgent({
     model: llm,
     tools: [webTool],
     systemPrompt: promptData.web_prompt,
 });
 
-export default web;
+export default webAgent;

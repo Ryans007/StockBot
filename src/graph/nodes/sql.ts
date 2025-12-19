@@ -1,13 +1,13 @@
-import {HumanMessage} from "langchain";
-import  sqlAgent  from "../agents/sql.ts";
+import { HumanMessage } from "langchain";
+import sqlAgent from "../agents/sql.ts";
 import AgentState from "../state";
 import * as z from "zod";
 
-async function sql(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
+async function sql(state: z.infer<typeof AgentState>): Promise<z.infer<typeof AgentState>> {
     console.log("Entering SQL Node with user input:", state.userInput);
     const response = await sqlAgent.invoke({
         messages: [
-            new HumanMessage({content: state.userInput})
+            new HumanMessage({ content: state.userInput })
         ],
     });
     console.log("SQL Agent response:", response);

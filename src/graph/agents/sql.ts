@@ -1,6 +1,6 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { sqlTools } from "../tools/sqlTools";
-import {createAgent} from "langchain";
+import { createAgent } from "langchain";
 import { readFileSync } from 'fs';
 import { parse } from "yaml";
 import dotenv from "dotenv";
@@ -21,10 +21,10 @@ const allTools = [
 
 const systemPrompt = promptData.sql_prompt;
 
-const Sql = createAgent({
+const sqlAgent = createAgent({
     model: llm,
     tools: allTools,
     systemPrompt: promptData.sql_prompt,
 });
 
-export default Sql;
+export default sqlAgent;

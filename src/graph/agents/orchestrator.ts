@@ -1,8 +1,8 @@
-import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {OrchestratorOutputSchema} from "../schemas/orchestrator.ts";
-import {createAgent} from "langchain";
-import {readFileSync} from "node:fs";
-import {parse} from "yaml";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { OrchestratorOutputSchema } from "../schemas/orchestrator.ts";
+import { createAgent } from "langchain";
+import { readFileSync } from "node:fs";
+import { parse } from "yaml";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,11 +15,11 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.5,
 })
 
-const orchestrator = createAgent({
+const orchestratorAgent = createAgent({
     model: llm,
     tools: [],
     systemPrompt: promptData.orchestrator_prompt,
     responseFormat: OrchestratorOutputSchema
 });
 
-export default orchestrator;
+export default orchestratorAgent;
