@@ -1,5 +1,5 @@
+import {RevisorOutputSchema} from "../schemas/revisor.ts";
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
-import {OrchestratorOutputSchema} from "../schemas/orchestratorSquema";
 import {createAgent} from "langchain";
 import {readFileSync} from "node:fs";
 import {parse} from "yaml";
@@ -7,19 +7,19 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const promptFile = readFileSync('./src/graph/prompts/orchestrator.yaml', 'utf-8')
+const promptFile = readFileSync('./src/graph/prompts/revisor.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
 const llm = new ChatGoogleGenerativeAI({
     model: "gemini-2.5-pro",
-    temperature: 0.5,
+    temperature: 0.3,
 })
 
-const orchestratorAgent = createAgent({
+const revisor = createAgent({
     model: llm,
     tools: [],
-    systemPrompt: promptData.orchestrator_prompt,
-    responseFormat: OrchestratorOutputSchema
+    systemPrompt: promptData.revisor_prompt,
+    responseFormat: RevisorOutputSchema
 });
 
-export default orchestratorAgent;
+export default revisor;

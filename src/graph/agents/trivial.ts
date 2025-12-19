@@ -14,10 +14,10 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.5,
 })
 
-const TrivialAgent = createAgent({
+const Trivial = createAgent({
     model: llm,
     tools: [],
     systemPrompt: promptData.trivial_prompt,
 });
 
-export default TrivialAgent;
+export default Trivial;

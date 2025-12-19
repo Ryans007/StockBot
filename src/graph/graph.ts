@@ -1,21 +1,21 @@
 import { StateGraph, MemorySaver} from "@langchain/langgraph"
-import orchestratorNode from "./nodes/orchestratorNode";
-import trivialNode from "./nodes/trivialNode";
-import structurerNode from "./nodes/structurerNode";
-import revisorNode from "./nodes/revisorNode";
-import webNode from "./nodes/webNode";
-import sqlNode from "./nodes/sqlNode";
+import orchestrator from "./nodes/orchestrator.ts";
+import trivial from "./nodes/trivial.ts";
+import structurer from "./nodes/structurer.ts";
+import revisor from "./nodes/revisor.ts";
+import web from "./nodes/web.ts";
+import sql from "./nodes/sql.ts";
 import AgentState from "./state";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 
 const workflow = new StateGraph(AgentState)
-    .addNode("Orchestrator", orchestratorNode)
-    .addNode("Structurer", structurerNode)
-    .addNode("Trivial", trivialNode)
-    .addNode("Sql", sqlNode)
-    .addNode("Revisor", revisorNode)
-    .addNode("Web", webNode)
+    .addNode("Orchestrator", orchestrator)
+    .addNode("Structurer", structurer)
+    .addNode("Trivial", trivial)
+    .addNode("Sql", sql)
+    .addNode("Revisor", revisor)
+    .addNode("Web", web)
     .addEdge("__start__", "Orchestrator")
     .addConditionalEdges(
         "Orchestrator",

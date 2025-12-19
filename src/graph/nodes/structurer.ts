@@ -1,9 +1,9 @@
 import { HumanMessage } from "langchain";
-import  structurerAgent  from "../agents/structurerAgent";
+import  structurerAgent  from "../agents/structurer.ts";
 import AgentState from "../state";
 import * as z from "zod";
 
-async function structurerNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
+async function structurer(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
     const messages = state.messages
     const response = await structurerAgent.invoke({
         messages: [
@@ -24,4 +24,4 @@ Modo de Preparo: ${recipeData.preparationMethod}`;
     };
 }
 
-export default structurerNode;
+export default structurer;

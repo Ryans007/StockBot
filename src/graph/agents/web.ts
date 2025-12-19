@@ -15,10 +15,10 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.2,
 })
 
-const webAgent = createAgent({
+const web = createAgent({
     model: llm,
     tools: [webTool],
     systemPrompt: promptData.web_prompt,
 });
 
-export default webAgent;
+export default web;

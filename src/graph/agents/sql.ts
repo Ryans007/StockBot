@@ -21,10 +21,10 @@ const allTools = [
 
 const systemPrompt = promptData.sql_prompt;
 
-const SqlAgent = createAgent({
+const Sql = createAgent({
     model: llm,
     tools: allTools,
     systemPrompt: promptData.sql_prompt,
 });
 
-export default SqlAgent;
+export default Sql;

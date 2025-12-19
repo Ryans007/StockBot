@@ -1,4 +1,4 @@
-import {StructurerOutputSchema} from "../schemas/structurerSquema";
+import {StructurerOutputSchema} from "../schemas/structurer.ts";
 import {ChatGoogleGenerativeAI} from "@langchain/google-genai";
 import {createAgent} from "langchain";
 import {readFileSync} from "node:fs";
@@ -15,11 +15,11 @@ const llm = new ChatGoogleGenerativeAI({
     temperature: 0.3,
 })
 
-const StructurerAgent = createAgent({
+const Structurer = createAgent({
     model: llm,
     tools: [],
     systemPrompt: promptData.structurer_prompt,
     responseFormat: StructurerOutputSchema
 });
 
-export default StructurerAgent;
+export default Structurer;

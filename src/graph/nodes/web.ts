@@ -1,11 +1,11 @@
-import { SystemMessage, HumanMessage, AIMessage } from "langchain";
-import  trivialAgent  from "../agents/trivialAgent";
+import {SystemMessage, HumanMessage, AIMessage} from "langchain";
+import  web  from "../agents/web.ts";
 import AgentState from "../state";
 import * as z from "zod";
 
-async function trivialNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
+async function web(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
     const messages = state.messages
-    const response = await trivialAgent.invoke({
+    const response = await web.invoke({
         messages: [
             new HumanMessage({content: state.userInput})
         ],
@@ -13,7 +13,7 @@ async function trivialNode(state: z.infer<typeof AgentState>): Promise <z.infer<
 
     return {
         ...state,
-        finalAnswer: String(response.messages[response.messages.length - 1].content),
+        nextAgent: String(response.messages[response.messages.length - 1].content),
         messages: messages.concat(
             [
                 new HumanMessage({content: state.userInput}),
@@ -23,4 +23,4 @@ async function trivialNode(state: z.infer<typeof AgentState>): Promise <z.infer<
     };
 }
 
-export default trivialNode;
+export default web;

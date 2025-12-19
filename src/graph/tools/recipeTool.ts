@@ -1,14 +1,14 @@
 import {tool} from "@langchain/core/tools";
 import {z} from "zod";
-import RecipeEntity from "../../entities/RecipeEntity";
+import Recipe from "../../entities/Recipe.ts";
 import {AppDataSource} from "../../config/dataSource";
 
 const toAddRecipeTool = tool(
   async (input: { name: string; ingredients: string; preparationMethod: string } ) => {
     try {
-        const recipeRepository = AppDataSource.getRepository(RecipeEntity);
+        const recipeRepository = AppDataSource.getRepository(Recipe);
 
-        const newRecipe = new RecipeEntity(
+        const newRecipe = new Recipe(
             input.name,
             input.ingredients,
             input.preparationMethod

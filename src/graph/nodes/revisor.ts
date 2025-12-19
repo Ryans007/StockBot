@@ -1,11 +1,11 @@
 import { SystemMessage, HumanMessage } from "langchain";
-import  revisorAgent  from "../agents/revisorAgent";
+import  revisor  from "../agents/revisor.ts";
 import AgentState from "../state";
 import * as z from "zod";
 
-async function revisorNode(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
+async function revisor(state: z.infer<typeof AgentState>): Promise <z.infer<typeof AgentState>> {
     const messages = state.messages
-    const response = await revisorAgent.invoke({
+    const response = await revisor.invoke({
         messages: [
             new HumanMessage({content: `Pergunta inicial:${state.userInput}\nResposta SQL:${state.sqlResponse}`})
         ],
@@ -19,4 +19,4 @@ async function revisorNode(state: z.infer<typeof AgentState>): Promise <z.infer<
     };
 }
 
-export default revisorNode;
+export default revisor;
