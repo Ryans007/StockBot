@@ -1,7 +1,7 @@
 import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity("assistant")
-export default class Assistant {
+export default class Conversation {
     @PrimaryGeneratedColumn()
     id?: number;
 
