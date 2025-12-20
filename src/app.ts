@@ -10,10 +10,10 @@ app.get("/", (_, res) => {
 
 AppDataSource.initialize()
     .then(() => {
-        console.log("Servidor rodando na porta 3000");
+        console.log("Banco de dados inicializado!");
     })
     .catch((err: any) => {
-        console.error("Erro na aplicação:", err);
+        console.error("Erro ao inicializar o banco de dados:", err);
     });
 
 export default app;
