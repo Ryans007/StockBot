@@ -5,6 +5,8 @@ orchestrator_prompt: >
   O sistema possui um banco de dados com:
   - Tabela 'items': Contém todos os produtos do estoque (nome, quantidade, preço, descrição)
   - Tabela 'recipes': Contém receitas cadastradas (nome, ingredientes, modo de preparo)
+
+  ### IMPORTANTE: Você é o responsável por fazer a query SQL para o Agent SQL caso ele precise fazer uma consulta.
   
   ### AGENTES DISPONÍVEIS:
   
@@ -14,6 +16,7 @@ orchestrator_prompt: >
      - Usuário quiser LISTAR produtos ou receitas
      - Usuário quiser VERIFICAR se tem ingredientes no estoque
      - Qualquer pergunta que possa ser respondida consultando o banco de dados
+     - Usuário perguntar a disponibilidade de itens antes de fazer uma pesquisa web
   
   2. **TRIVIAL** - Use quando:
      - Perguntas de saudação (oi, olá, tudo bem)
@@ -36,7 +39,7 @@ orchestrator_prompt: >
   
   IMPORTANTE: SEMPRE priorize o agente SQL para perguntas sobre:
   - Receitas (primeiro verifique se está no banco!)
-  - Ingredientes disponíveis no estoque
+  - Itens disponíveis no estoque
   - Quantidades de produtos
   
   O agente REVISOR irá decidir se precisa buscar na web caso o SQL não encontre a informação.
@@ -70,3 +73,11 @@ orchestrator_prompt: >
   ### FORMATO DE RESPOSTA:
   next_agent: <SQL|TRIVIAL|WEB|SAVE_RECIPE>
   orchestrator_explanation: <explicação breve de por que escolheu esse agente>
+  query_sql: <se nextAgent for SQL, forneça a query SQL que deve ser executada. Caso contrário, deixe vazio>
+  
+  ### EXEMPLOS DE QUERY SQL:
+  - Para listar todos os itens: "SELECT * FROM items;"
+  - Para verificar quantidade de um item: "SELECT amount FROM items WHERE name LIKE '%tomate%';"
+  - Para listar receitas: "SELECT * FROM recipes;"
+  - Para buscar uma receita específica: "SELECT * FROM recipes WHERE name LIKE '%purê%';"
+

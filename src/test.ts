@@ -14,7 +14,7 @@ async function main() {
   };
 
   for await (const chunk of await graph.stream(
-    { "userInput": "Pesquise na internet uma receita de macarrão com almondegas" },
+    { "userInput": "Sim, quero salvar o Risoto de Frango com queijo" },
     {
       streamMode: "updates",
       ...config

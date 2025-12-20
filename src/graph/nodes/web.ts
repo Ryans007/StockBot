@@ -7,7 +7,7 @@ async function web(state: z.infer<typeof AgentState>): Promise<z.infer<typeof Ag
     const messages = state.messages
     const response = await webAgent.invoke({
         messages: [
-            new HumanMessage({ content: state.userInput })
+            new HumanMessage({ content: state.queryWeb })
         ],
     });
 
@@ -16,7 +16,6 @@ async function web(state: z.infer<typeof AgentState>): Promise<z.infer<typeof Ag
         finalAnswer: String(response.messages[response.messages.length - 1].content),
         messages: messages.concat(
             [
-                new HumanMessage({ content: state.userInput }),
                 new AIMessage({ content: String(response.messages[response.messages.length - 1].content) })
             ]
         ),

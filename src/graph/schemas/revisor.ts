@@ -1,8 +1,9 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const RevisorOutputSchema = z.object({
     nextAgent: z.string(),
-    queryWeb: z.string()
+    queryWeb: z.string(),
+    revisorExplanation: z.string()
 });
 
 export type RevisorOutput = z.infer<typeof RevisorOutputSchema>;

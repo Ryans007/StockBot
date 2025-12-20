@@ -14,6 +14,7 @@ async function orchestrator(state: z.infer<typeof AgentState>): Promise<z.infer<
     return {
         ...state,
         nextAgent: response.structuredResponse.nextAgent,
+        querySQL: response.structuredResponse.querySQL || "",
         orchestratorExplanation: response.structuredResponse.orchestrationExplanation,
         messages: messages.concat([new HumanMessage({ content: state.userInput })]),
     };

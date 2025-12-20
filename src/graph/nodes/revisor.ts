@@ -1,4 +1,4 @@
-import { SystemMessage, HumanMessage } from "langchain";
+import { SystemMessage, HumanMessage, AIMessage } from "langchain";
 import revisorAgent from "../agents/revisor.ts";
 import AgentState from "../state";
 import * as z from "zod";
@@ -14,8 +14,14 @@ async function revisor(state: z.infer<typeof AgentState>): Promise<z.infer<typeo
     return {
         ...state,
         nextAgent: response.structuredResponse.nextAgent,
-        userInput: response.structuredResponse.queryWeb,
+        queryWeb: response.structuredResponse.queryWeb,
+        revisorExplanation: response.structuredResponse.revisorExplanation,
         finalAnswer: state.sqlResponse,
+        messages: messages.concat(
+            [
+                new AIMessage({ content: String(response.messages[response.messages.length - 1].content) })
+            ]
+        ),
     };
 }
 
