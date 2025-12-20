@@ -10,7 +10,7 @@ const typeOrmRepository = AppDataSource.getRepository(Conversation);
 const conversationRepository = new ConversationRepository(typeOrmRepository);
 const conversationController = new ConversationController(conversationRepository);
 
-router.post("/send_message", conversationController.createConversation);
+router.post("/send_message", (req, res) => conversationController.createConversation(req, res));
 
 export default router;
 

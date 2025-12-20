@@ -10,9 +10,9 @@ interface ChatRequest {
 }
 
 export default class ConversationController {
-    constructor(private repository: ConversationRepository) { }
+    constructor(private repository: ConversationRepository) { };
 
-    async createConversation(res: Response, req: Request) {
+    async createConversation(req: Request, res: Response) {
         const { user_message, thread_id } = <ChatRequest>req.body;
 
         const activeThreadID = thread_id || crypto.randomUUID();
@@ -20,7 +20,7 @@ export default class ConversationController {
         const config = { "configurable": { "thread_id": activeThreadID } };
         const response = await graph.invoke({ "userInput": user_message }, config);
 
-        const ai_message = response.messages[response.messages.length - 1].content;
+        const ai_message = response.finalAnswer;
 
         const conversation = new Conversation(
             activeThreadID,
