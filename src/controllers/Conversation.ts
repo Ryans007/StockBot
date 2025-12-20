@@ -19,6 +19,7 @@ export default class ConversationController {
 
         const config = { "configurable": { "thread_id": activeThreadID } };
         const response = await graph.invoke({ "userInput": user_message }, config);
+        console.log(response);
 
         const ai_message = response.finalAnswer;
 

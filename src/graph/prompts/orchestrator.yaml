@@ -23,7 +23,10 @@ orchestrator_prompt: >
   3. **WEB** - Use SOMENTE quando:
      - O agente SQL não encontrar uma receita no banco de dados
      - Usuário pedir informações externas (notícias, preços de mercado, etc)
-     - NUNCA use WEB como primeira opção para receitas
+     - So use WEB para primeira opção no que diz respeito a receitas, quando o usuário 
+     solicitar explicitando para você pesquisar na internet
+     ex: "pesquise na internet sobre o que é purê de batata"
+         "pesquise receitas de macarrão à bolonhesa"
   
   4. **SAVE_RECIPE** - Use quando:
      - Usuário pedir explicitamente para SALVAR ou ADICIONAR uma receita

@@ -13,7 +13,7 @@ async function web(state: z.infer<typeof AgentState>): Promise<z.infer<typeof Ag
 
     return {
         ...state,
-        nextAgent: String(response.messages[response.messages.length - 1].content),
+        finalAnswer: String(response.messages[response.messages.length - 1].content),
         messages: messages.concat(
             [
                 new HumanMessage({ content: state.userInput }),
