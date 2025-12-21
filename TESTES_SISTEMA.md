@@ -19,7 +19,7 @@ Este documento contém casos de teste para validar o funcionamento completo do s
 
 ## 1. Testes do Agente TRIVIAL
 
-### Teste 1.1 - Saudação Simples
+### Teste 1.1 - Saudação Simples - OK
 **Entrada:** `Oi, tudo bem?`
 
 **Agente Esperado:** TRIVIAL
@@ -32,7 +32,7 @@ Como posso te ajudar hoje?
 
 ---
 
-### Teste 1.2 - Perguntas sobre Funcionalidades
+### Teste 1.2 - Perguntas sobre Funcionalidades - OK
 **Entrada:** `O que você pode fazer?`
 
 **Agente Esperado:** TRIVIAL
@@ -51,7 +51,7 @@ Experimente perguntar: 'Quantos ovos tenho?' ou 'Qual a receita de bolo de choco
 
 ---
 
-### Teste 1.3 - Como Funciona
+### Teste 1.3 - Como Funciona - OK
 **Entrada:** `Como funciona esse sistema?`
 
 **Agente Esperado:** TRIVIAL
@@ -69,7 +69,7 @@ Estou aqui para facilitar sua vida! O que gostaria de saber?
 
 ---
 
-## 2. Testes do Agente SQL - Consultas de Estoque
+## 2. Testes do Agente SQL - Consultas de Estoque - OK
 
 ### Teste 2.1 - Consulta de Quantidade Simples
 **Entrada:** `Quantos tomates tem no estoque?`
@@ -85,7 +85,7 @@ Temos 10 unidades de Tomate no estoque.
 
 ---
 
-### Teste 2.2 - Consulta de Preço
+### Teste 2.2 - Consulta de Preço - OK
 **Entrada:** `Qual o preço do arroz?`
 
 **Agente Esperado:** SQL
@@ -99,8 +99,8 @@ O Arroz Branco custa R$ 12,50.
 
 ---
 
-### Teste 2.3 - Consulta com LIKE (palavra parcial)
-**Entrada:** `Quantas cebolas eu tenho?`
+### Teste 2.3 - Consulta com LIKE (palavra parcial) - OK
+**Entrada:** `Quantas cebolas eu tenho?` 
 
 **Agente Esperado:** SQL
 
@@ -113,7 +113,7 @@ Temos 11 unidades de Cebola no estoque.
 
 ---
 
-### Teste 2.4 - Listagem com Filtro
+### Teste 2.4 - Listagem com Filtro - OK
 **Entrada:** `Liste todos os produtos com menos de 5 unidades`
 
 **Agente Esperado:** SQL
@@ -130,7 +130,7 @@ Produtos com estoque baixo (menos de 5 unidades):
 
 ---
 
-### Teste 2.5 - Consulta de Item Inexistente
+### Teste 2.5 - Consulta de Item Inexistente - OK
 **Entrada:** `Quantos abacaxis tenho?`
 
 **Agente Esperado:** SQL
@@ -144,7 +144,7 @@ Não encontrei "abacaxi" no estoque. O produto não está cadastrado.
 
 ---
 
-## 3. Testes do Agente SQL - Consultas de Receitas
+## 3. Testes do Agente SQL - Consultas de Receitas - OK
 
 ### Teste 3.1 - Buscar Receita Cadastrada
 **Entrada:** `Como fazer Purê de Batata?`
@@ -167,7 +167,7 @@ Escorra e amasse. Adicione leite morno, manteiga e sal. Misture até ficar cremo
 
 ---
 
-### Teste 3.2 - Receita com Verificação de Ingredientes
+### Teste 3.2 - Receita com Verificação de Ingredientes - OK
 **Entrada:** `Quais os ingredientes para fazer o Purê de batata, e também me diga se eu tenho os ingredientes necessários no estoque?`
 
 **Agente Esperado:** SQL
@@ -195,7 +195,7 @@ Você tem todos os ingredientes necessários! 🎉
 
 ---
 
-### Teste 3.3 - Receita com Ingredientes Insuficientes
+### Teste 3.3 - Receita com Ingredientes Insuficientes - OK
 **Entrada:** `Tenho os ingredientes para fazer Macarrão à Bolonhesa?`
 
 **Agente Esperado:** SQL
@@ -228,7 +228,7 @@ Você tem todos os ingredientes necessários! 🎉
 
 ---
 
-### Teste 3.4 - Listar Todas as Receitas
+### Teste 3.4 - Listar Todas as Receitas - OK
 **Entrada:** `Quais receitas você tem cadastradas?`
 
 **Agente Esperado:** SQL
@@ -265,7 +265,7 @@ Total: 7 receitas
 
 ---
 
-### Teste 4.2 - Revisor deve chamar WEB (receita não encontrada)
+### Teste 4.2 - Revisor deve chamar WEB (receita não encontrada) - OK
 **Contexto:**
 - Pergunta: "Como fazer Bolo de Chocolate?"
 - Resposta SQL: "Não encontrei receita de 'Bolo de Chocolate' no banco de dados"
@@ -278,7 +278,7 @@ Total: 7 receitas
 
 ---
 
-### Teste 4.3 - Revisor deve FINALIZAR (mesmo com receita parcial encontrada)
+### Teste 4.3 - Revisor deve FINALIZAR (mesmo com receita parcial encontrada) - OK
 **Contexto:**
 - Pergunta: "Tenho batata no estoque?"
 - Resposta SQL: "Sim, você tem 3 unidades de Batata"
@@ -291,7 +291,7 @@ Total: 7 receitas
 
 ## 5. Testes do Agente WEB
 
-### Teste 5.1 - Buscar Receita não Cadastrada
+### Teste 5.1 - Buscar Receita não Cadastrada - OK
 **Entrada:** `Como fazer Bolo de Chocolate?`
 
 **Fluxo Esperado:** 
@@ -328,7 +328,7 @@ Gostaria de salvar alguma receita no banco de dados? Se sim, qual?
 
 ---
 
-### Teste 5.2 - Buscar Receita Específica
+### Teste 5.2 - Buscar Receita Específica - OK
 **Entrada:** `Busque uma receita de Lasanha de Berinjela`
 
 **Agente Esperado:** Orchestrator → SQL → Revisor → WEB
@@ -339,7 +339,7 @@ Gostaria de salvar alguma receita no banco de dados? Se sim, qual?
 
 ## 6. Testes do Agente STRUCTURER
 
-### Teste 6.1 - Salvar Receita da Web
+### Teste 6.1 - Salvar Receita da Web - OK
 **Contexto:** Usuário buscou receita de Bolo de Chocolate na web
 
 **Entrada:** `Sim, quero salvar a receita de Bolo de Chocolate`
@@ -360,7 +360,7 @@ Agora você pode consultá-la a qualquer momento. 📋
 
 ---
 
-### Teste 6.2 - Salvar Receita Customizada
+### Teste 6.2 - Salvar Receita Customizada - OK
 **Entrada:** `Salve essa receita: Vitamina de Banana. Ingredientes: 2 bananas, 1 copo de leite, 1 colher de açúcar. Modo de preparo: Bata tudo no liquidificador.`
 
 **Agente Esperado:** SAVE_RECIPE
@@ -374,7 +374,7 @@ Receita "Vitamina de Banana" salva com sucesso!
 
 ## 7. Testes de Fluxo Completo
 
-### Teste 7.1 - Fluxo Completo: Buscar → Verificar → Salvar
+### Teste 7.1 - Fluxo Completo: Buscar → Verificar → Salvar - OK
 **Sequência de Perguntas:**
 
 1. **Entrada:** `Busque uma receita de Brownie`

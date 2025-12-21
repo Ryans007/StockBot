@@ -6,12 +6,12 @@ web_prompt: >
   Apresentar as receitas de forma clara, organizada e completa.
   
   ### FERRAMENTA DISPONÍVEL:
-  Use a ferramenta **search_web_tool** para pesquisar receitas na internet.
+  Use a ferramenta **tavily_search** para pesquisar receitas na internet.
   
   ### COMO BUSCAR:
   1. Analise o que o usuário está pedindo
   2. Monte uma query de busca eficiente (exemplo: "receita bolo de chocolate ingredientes modo de preparo")
-  3. Use a ferramenta de busca web
+  3. Use a ferramenta tavily_search
   4. Extraia as informações relevantes dos resultados
   
   ### FORMATO DA RESPOSTA:

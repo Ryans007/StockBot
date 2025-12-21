@@ -5,8 +5,12 @@ import * as z from "zod";
 
 async function orchestrator(state: z.infer<typeof AgentState>): Promise<z.infer<typeof AgentState>> {
     const messages = state.messages
+    console.log("HISTÓRICO ORQUESTRADOR (length):", messages.length)
+    console.log("USER INPUT:", state.userInput)
+
     const response = await orchestratorAgent.invoke({
         messages: [
+            ...messages,
             new HumanMessage({ content: state.userInput })
         ],
     });
@@ -15,8 +19,9 @@ async function orchestrator(state: z.infer<typeof AgentState>): Promise<z.infer<
         ...state,
         nextAgent: response.structuredResponse.nextAgent,
         querySQL: response.structuredResponse.querySQL || "",
+        queryWeb: response.structuredResponse.queryWeb || "",
         orchestratorExplanation: response.structuredResponse.orchestrationExplanation,
-        messages: messages.concat([new HumanMessage({ content: state.userInput })]),
+        messages: [state.userInput]
     };
 }
 

@@ -14,11 +14,7 @@ async function web(state: z.infer<typeof AgentState>): Promise<z.infer<typeof Ag
     return {
         ...state,
         finalAnswer: String(response.messages[response.messages.length - 1].content),
-        messages: messages.concat(
-            [
-                new AIMessage({ content: String(response.messages[response.messages.length - 1].content) })
-            ]
-        ),
+        messages: [String(response.messages[response.messages.length - 1].content)]
     };
 }
 

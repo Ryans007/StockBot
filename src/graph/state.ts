@@ -1,4 +1,4 @@
-import { BaseMessage } from "@langchain/core/messages";
+import { registry } from "@langchain/langgraph/zod";
 import * as z from "zod";
 
 const AgentState = z.object({
@@ -10,8 +10,12 @@ const AgentState = z.object({
   queryWeb: z.string().describe("Consulta web a ser executada, se aplicável."),
   sqlResponse: z.string().describe("Resposta obtida da consulta SQL, se aplicável."),
   finalAnswer: z.string().describe("Resposta final para o usuário."),
-  messages: z.array(z.custom<BaseMessage>()).default([]),
-
+  messages: z.array(z.string()).register(registry, {
+    reducer: {
+      fn: (x, y) => x.concat(y),
+    },
+    default: () => [] as string[],
+  }),
 });
 
 export default AgentState;

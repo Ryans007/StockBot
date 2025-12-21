@@ -24,8 +24,31 @@ revisor_prompt: >
   
   **Exemplo 1 - FINALIZAR:**
   Pergunta: "Quais ingredientes para purê de batata e tenho no estoque?"
-  Resposta SQL: "Os ingredientes são: batata, leite, manteiga, sal. Você tem todos no estoque: Batata (3), Leite (19), Manteiga (45), Sal (20)"
-  Decisão: FINALIZAR (resposta completa!)
+  Resposta SQL: "Receita: Purê de Batata
+  
+  Ingredientes necessários:
+  • 1kg de batata
+  • 200ml de leite integral
+  • 50g de manteiga
+  • sal a gosto
+  
+  Verificação de Estoque:
+  • Batata: 3 unidades (disponível)
+  • Leite Integral: 19 unidades (disponível)
+  • Manteiga: 45 unidades (disponível)
+  • Sal Refinado: 20 unidades (disponível)
+  
+  Você tem todos os ingredientes necessários!"
+  Decisão: FINALIZAR (resposta completa com receita E verificação de estoque!)
+  
+  **Exemplo 1b - WEB (resposta incompleta):**
+  Pergunta: "Quais ingredientes para purê de batata e tenho no estoque?"
+  Resposta SQL: "Purê de batata:
+  Ingredientes: 1kg de batata, 200ml de leite integral, 50g de manteiga, sal a gosto
+  Modo de preparo: descasque e cozinhe as batatas..."
+  Decisão: WEB (resposta INCOMPLETA! Faltou verificar os ingredientes no estoque)
+  Query: "verificar estoque de batata, leite, manteiga e sal"
+  Explicação: O SQL só retornou a receita, mas não verificou se os ingredientes estão disponíveis no estoque.
   
   **Exemplo 2 - FINALIZAR:**
   Pergunta: "Quantos tomates tem?"

@@ -14,7 +14,7 @@ async function main() {
   };
 
   for await (const chunk of await graph.stream(
-    { "userInput": "Sim, quero salvar o Risoto de Frango com queijo" },
+    { "userInput": "Como fazer Omelete Simples?" },
     {
       streamMode: "updates",
       ...config
@@ -22,9 +22,19 @@ async function main() {
   )) {
     console.log(chunk);
   }
-  // const response = await graph.invoke({ "userInput": "Olá, tudo bem?" }, config);
 
-  // console.log(response.messages[response.messages.length - 1].content);
+  for await (const chunk of await graph.stream(
+    { "userInput": "Tenho os ingredientes?" },
+    {
+      streamMode: "updates",
+      ...config
+    }
+  )) {
+    console.log(chunk);
+  }
+  // const response = await graph.invoke({ "userInput": "Salve a receita do açai na tigela com doce de leite" }, config);
+
+  // console.log(response.messages[response.messages.length - 1]);
 }
 
 main().catch((err: any) => {
