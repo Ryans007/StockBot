@@ -5,9 +5,6 @@ import * as z from "zod";
 
 async function orchestrator(state: z.infer<typeof AgentState>): Promise<z.infer<typeof AgentState>> {
     const messages = state.messages
-    console.log("HISTÓRICO ORQUESTRADOR (length):", messages.length)
-    console.log("USER INPUT:", state.userInput)
-
     const response = await orchestratorAgent.invoke({
         messages: [
             ...messages,

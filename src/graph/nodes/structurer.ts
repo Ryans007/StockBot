@@ -5,8 +5,6 @@ import * as z from "zod";
 
 async function structurer(state: z.infer<typeof AgentState>): Promise<z.infer<typeof AgentState>> {
     const messages = state.messages
-    console.log("HISTÓRICO STRUCTURER: " + messages)
-    console.log("TAMANHO HISTÓRICO STRUCTURER: " + messages.length)
     const response = await structurerAgent.invoke({
         messages: [
             ...messages,
