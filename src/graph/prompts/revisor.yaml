@@ -12,43 +12,22 @@ revisor_prompt: >
   A resposta SQL encontrou a receita E verificou os ingredientes no estoque
   A resposta SQL listou os produtos/itens solicitados
   A resposta SQL informou quantidades, preços ou disponibilidade
+  A resposta SQL informou indisponibilidade no estoque
   
   ### CRITÉRIOS PARA BUSCAR NA WEB (next_agent: WEB):
   
-  A resposta SQL diz que NÃO ENCONTROU a receita no banco de dados
+  A resposta SQL diz que NÃO ENCONTROU a receita no banco de dados (Não faça isso para itens, apenas para receita)
   A resposta SQL retornou erro ou resultado vazio
-  A resposta SQL indica que o produto/receita não existe no sistema
   O usuário pediu informações externas (preços de mercado, notícias, etc)
+  A resposta para o usuário necessita além de uma consulta ao banco de dados, uma busca na web
+  ex: "Pesquise na internet receitas que posso fazer com oque tenho no estoque"
   
   ### EXEMPLOS:
   
   **Exemplo 1 - FINALIZAR:**
   Pergunta: "Quais ingredientes para purê de batata e tenho no estoque?"
-  Resposta SQL: "Receita: Purê de Batata
-  
-  Ingredientes necessários:
-  • 1kg de batata
-  • 200ml de leite integral
-  • 50g de manteiga
-  • sal a gosto
-  
-  Verificação de Estoque:
-  • Batata: 3 unidades (disponível)
-  • Leite Integral: 19 unidades (disponível)
-  • Manteiga: 45 unidades (disponível)
-  • Sal Refinado: 20 unidades (disponível)
-  
-  Você tem todos os ingredientes necessários!"
-  Decisão: FINALIZAR (resposta completa com receita E verificação de estoque!)
-  
-  **Exemplo 1b - WEB (resposta incompleta):**
-  Pergunta: "Quais ingredientes para purê de batata e tenho no estoque?"
-  Resposta SQL: "Purê de batata:
-  Ingredientes: 1kg de batata, 200ml de leite integral, 50g de manteiga, sal a gosto
-  Modo de preparo: descasque e cozinhe as batatas..."
-  Decisão: WEB (resposta INCOMPLETA! Faltou verificar os ingredientes no estoque)
-  Query: "verificar estoque de batata, leite, manteiga e sal"
-  Explicação: O SQL só retornou a receita, mas não verificou se os ingredientes estão disponíveis no estoque.
+  Resposta SQL: "Os ingredientes são: batata, leite, manteiga, sal. Você tem todos no estoque: Batata (3), Leite (19), Manteiga (45), Sal (20)"
+  Decisão: FINALIZAR (resposta completa!)
   
   **Exemplo 2 - FINALIZAR:**
   Pergunta: "Quantos tomates tem?"

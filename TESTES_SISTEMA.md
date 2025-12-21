@@ -391,7 +391,7 @@ Receita "Vitamina de Banana" salva com sucesso!
 
 ---
 
-### Teste 7.2 - Fluxo: Receita Cadastrada
+### Teste 7.2 - Fluxo: Receita Cadastrada - Ok
 **Sequência:**
 
 1. **Entrada:** `Como fazer Omelete Simples?`
@@ -404,7 +404,7 @@ Receita "Vitamina de Banana" salva com sucesso!
 
 ---
 
-### Teste 7.3 - Fluxo: Consulta de Estoque Múltipla
+### Teste 7.3 - Fluxo: Consulta de Estoque Múltipla - OK
 **Sequência:**
 
 1. **Entrada:** `Quantos ovos tenho?`
@@ -420,8 +420,8 @@ Receita "Vitamina de Banana" salva com sucesso!
 
 ## 8. Testes de Casos Extremos
 
-### Teste 8.1 - Pergunta Ambígua
-**Entrada:** `Tem massa?`
+### Teste 8.1 - Pergunta Ambígua - OK
+**Entrada:** `Tem massa?` 
 
 **Agente Esperado:** SQL
 
@@ -433,7 +433,7 @@ Encontrei os seguintes produtos relacionados a "massa":
 
 ---
 
-### Teste 8.2 - Múltiplas Receitas com Mesmo Ingrediente
+### Teste 8.2 - Múltiplas Receitas com Mesmo Ingrediente - OK
 **Entrada:** `Quais receitas posso fazer com frango?`
 
 **Agente Esperado:** SQL
@@ -446,7 +446,7 @@ Receitas que contêm frango:
 
 ---
 
-### Teste 8.3 - Pergunta sobre Ingrediente que não é Item de Estoque
+### Teste 8.3 - Pergunta sobre Ingrediente que não é Item de Estoque - OK
 **Entrada:** `Tenho noz-moscada?`
 
 **Agente Esperado:** SQL
@@ -458,7 +458,7 @@ Não encontrei "noz-moscada" no estoque. O produto não está cadastrado.
 
 ---
 
-### Teste 8.4 - Consulta com Erro de Digitação
+### Teste 8.4 - Consulta com Erro de Digitação - OK
 **Entrada:** `Quantos ovoss tenho?`
 
 **Agente Esperado:** SQL (deve usar LIKE para tolerar erros)
@@ -471,7 +471,7 @@ Você tem 18 unidades de Ovos no estoque.
 
 ---
 
-### Teste 8.5 - Receita Parcialmente Cadastrada
+### Teste 8.5 - Receita Parcialmente Cadastrada - OK
 **Entrada:** `Como fazer Macarrão com Alho e Óleo?`
 
 **Agente Esperado:** SQL → não encontra → Revisor → WEB
@@ -484,18 +484,18 @@ Você tem 18 unidades de Ovos no estoque.
 
 Após executar todos os testes, verifique:
 
-- [ ] Orchestrator roteia corretamente para cada agente
-- [ ] Agente SQL consulta corretamente tabelas `items` e `recipes`
-- [ ] Agente SQL usa LIKE corretamente para buscas parciais
-- [ ] Revisor decide FINALIZAR quando resposta está completa
-- [ ] Revisor decide WEB quando receita não está cadastrada
-- [ ] Agente WEB busca receitas e apresenta formatado
-- [ ] Agente WEB sempre pergunta sobre salvar receita
-- [ ] Agente Structurer extrai e estrutura receitas corretamente
-- [ ] Agente Trivial responde saudações e perguntas sobre o sistema
-- [ ] Sistema mantém contexto entre perguntas
-- [ ] Erros são tratados adequadamente
-- [ ] Mensagens são claras e bem formatadas
+- [OK] Orchestrator roteia corretamente para cada agente
+- [OK] Agente SQL consulta corretamente tabelas `items` e `recipes`
+- [OK] Agente SQL usa LIKE corretamente para buscas parciais
+- [OK] Revisor decide FINALIZAR quando resposta está completa
+- [OK] Revisor decide WEB quando receita não está cadastrada
+- [OK] Agente WEB busca receitas e apresenta formatado
+- [OK] Agente WEB sempre pergunta sobre salvar receita
+- [OK] Agente Structurer extrai e estrutura receitas corretamente
+- [OK] Agente Trivial responde saudações e perguntas sobre o sistema
+- [OK] Sistema mantém contexto entre perguntas
+- [OK] Erros são tratados adequadamente
+- [OK] Mensagens são claras e bem formatadas
 
 ---
 
