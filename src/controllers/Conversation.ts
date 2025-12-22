@@ -33,7 +33,7 @@ export default class ConversationController {
         return res.status(201).json(conversation);
     }
     async getMessages(_: Request, res: Response) {
-        const conversationList = await this.repository.getMessages()
+        const conversationList = await this.repository.getMessages();
 
         return res.status(201).json(conversationList);
     }

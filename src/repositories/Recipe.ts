@@ -1,6 +1,7 @@
 import Recipe from "../entities/Recipe.ts";
 import RecipeInterfaceRepository from "./interfaces/Recipe.ts";
 import {Repository} from "typeorm";
+import Conversation from "../entities/Conversation.ts";
 
 export default class RecipeRepository implements RecipeInterfaceRepository {
     private repository: Repository<Recipe>
@@ -22,8 +23,8 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
             }
         }
     }
-    async list(): Promise<void> {
-        await this.repository.find()
+    async list(): Promise<Recipe[]> {
+        return await this.repository.find()
     }
     async update(id: number, recipe: Recipe): Promise<{ success: boolean; message: string }> {
         try {

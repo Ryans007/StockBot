@@ -10,7 +10,7 @@ export default class ConversationRepository implements ConversationInterfaceRepo
     async save(conversation: Conversation): Promise<Conversation> {
         return await this.repository.save(conversation);
     }
-    async getMessages(): Promise<void> {
-        await this.repository.find();
+    async getMessages(): Promise<Conversation[]> {
+        return await this.repository.find();
     }
 }

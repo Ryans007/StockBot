@@ -1,6 +1,7 @@
 import ItemInterfaceRepository from "./interfaces/Item.ts";
 import {Repository} from "typeorm";
 import Item from "../entities/Item.ts";
+import Conversation from "../entities/Conversation.ts";
 
 export default class ItemRepository implements ItemInterfaceRepository {
     private repository: Repository<Item>;
@@ -22,8 +23,8 @@ export default class ItemRepository implements ItemInterfaceRepository {
             }
         }
     }
-    async list(): Promise<void> {
-        await this.repository.find()
+    async list(): Promise<Item[]> {
+        return await this.repository.find()
     }
     async update(id: number, item: Item): Promise<{ success: boolean; message: string }> {
         try {
