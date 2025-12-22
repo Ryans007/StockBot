@@ -14,3 +14,5 @@ router.post("/", (req, res) => itemController.create(req, res));
 router.get("/", (req, res) => itemController.list(req, res));
 router.put("/:id", (req, res) => itemController.update(req, res));
 router.delete("/:id", (req, res) => itemController.delete(req, res));
+
+export default router;

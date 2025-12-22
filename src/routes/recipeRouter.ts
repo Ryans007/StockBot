@@ -15,3 +15,4 @@ router.get("/", (req, res) => recipeController.list(req, res));
 router.put("/:id", (req, res) => recipeController.update(req, res));
 router.delete("/:id", (req, res) => recipeController.delete(req, res));
 
+export default router;
