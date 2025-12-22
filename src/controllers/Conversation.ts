@@ -11,7 +11,6 @@ interface ChatRequest {
 
 export default class ConversationController {
     constructor(private repository: ConversationRepository) { };
-
     async createConversation(req: Request, res: Response) {
         const { user_message, thread_id } = <ChatRequest>req.body;
 
@@ -32,5 +31,10 @@ export default class ConversationController {
         await this.repository.save(conversation);
 
         return res.status(201).json(conversation);
+    }
+    async getMessages(_: Request, res: Response) {
+        const conversationList = await this.repository.getMessages()
+
+        return res.status(201).json(conversationList);
     }
 }

@@ -11,6 +11,7 @@ const conversationRepository = new ConversationRepository(typeOrmRepository);
 const conversationController = new ConversationController(conversationRepository);
 
 router.post("/send_message", (req, res) => conversationController.createConversation(req, res));
+router.get("/history", (req, res) => conversationController.getMessages(req, res));
 
 export default router;
 
