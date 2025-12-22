@@ -16,7 +16,7 @@ export default class ItemController {
         }
         return res.status(201).json(message);
     }
-    async list(req: Request, res: Response) {
+    async list(_: Request, res: Response) {
         const itemsList = await this.repository.list();
 
         return res.status(201).json(itemsList);
