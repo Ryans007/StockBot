@@ -1,6 +1,6 @@
 import Recipe from "../../entities/Recipe.ts";
 
-export default class RecipeInterfaceRepository {
+export default interface RecipeInterfaceRepository {
     create(recipe: Recipe): Promise<object>;
     list(): Promise<void>;
     update(id: number, recipe: Recipe): Promise<object>
