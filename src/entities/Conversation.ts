@@ -3,7 +3,7 @@ import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 @Entity("assistant")
 export default class Conversation {
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @Column("text")
     thread_id: string;
