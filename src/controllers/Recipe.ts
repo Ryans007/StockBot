@@ -14,7 +14,7 @@ export default class RecipeController {
         if (!success) {
             return res.status(401).json(message);
         }
-        return res.status(201).json(message);
+        return res.status(200).json(message);
     }
     async list(_: Request, res: Response) {
         const itemsList = await this.repository.list();
@@ -40,7 +40,7 @@ export default class RecipeController {
         const {success, message} = await this.repository.delete(Number(id));
 
         if (!success) {
-            return res.status(401).json(message);
+            return res.status(400).json(message);
         }
         return res.status(201).json(message);
     }

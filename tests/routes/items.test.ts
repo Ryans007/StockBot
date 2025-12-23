@@ -43,7 +43,7 @@ describe("Items API", () => {
             const response = await request(app)
                 .post("/items")
                 .send(newItem)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Erro ao criar um Item!")
         })
@@ -58,7 +58,7 @@ describe("Items API", () => {
             const response = await request(app)
                 .post("/items")
                 .send(newItem)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Erro ao criar um Item!")
         })
@@ -74,7 +74,7 @@ describe("Items API", () => {
             const response = await request(app)
                 .post("/items")
                 .send(newItem)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Erro ao criar um Item!")
         })
@@ -94,7 +94,7 @@ describe("Items API", () => {
         it("deve listar todos os items com sucesso", async () => {
             const response = await request(app)
                 .get("/items")
-                .expect(201)
+                .expect(200)
 
             expect(Array.isArray(response.body)).toBe(true)
             expect(response.body.length).toBeGreaterThan(0)
@@ -103,7 +103,7 @@ describe("Items API", () => {
         it("deve retornar items com a estrutura correta", async () => {
             const response = await request(app)
                 .get("/items")
-                .expect(201)
+                .expect(200)
 
             const item = response.body[0]
             expect(item).toHaveProperty("id")
@@ -187,7 +187,7 @@ describe("Items API", () => {
             const response = await request(app)
                 .put(`/items/${createdItemId}`)
                 .send(invalidUpdate)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Erro ao atualizar o Item!")
         })
@@ -213,7 +213,7 @@ describe("Items API", () => {
         it("deve deletar um item existente com sucesso", async () => {
             const response = await request(app)
                 .delete(`/items/${itemToDeleteId}`)
-                .expect(201)
+                .expect(200)
 
             expect(response.body).toBe("Item deletado com sucesso!")
         })
@@ -230,17 +230,17 @@ describe("Items API", () => {
         it("tentar deletar um item com id inexistente", async () => {
             const response = await request(app)
                 .delete("/items/999999")
-                .expect(201)
+                .expect(400)
 
-            expect(response.body).toBe("Item deletado com sucesso!")
+            expect(response.body).toBe("Nenhum Item encontrado com esse id!")
         })
 
         it("tentar deletar um item com id inválido (string)", async () => {
             const response = await request(app)
                 .delete("/items/invalid-id")
-                .expect(201)
+                .expect(400)
 
-            expect(response.body).toBe("Item deletado com sucesso!")
+            expect(response.body).toBe("Erro ao deletar um Item!")
         })
     })
 })

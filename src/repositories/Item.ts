@@ -59,8 +59,15 @@ export default class ItemRepository implements ItemInterfaceRepository {
     }
     async delete(id: number): Promise<{ success: boolean; message: string }> {
         try {
-            await this.repository.delete(id)
+            const itemToDelete = await this.repository.findOneBy({id: id});
 
+            if (!itemToDelete){
+                return {
+                    "success": false,
+                    "message": "Nenhum Item encontrado com esse id!"
+                }
+            }
+            await this.repository.delete(id)
             return {
                 success: true,
                 message: "Item deletado com sucesso!"
