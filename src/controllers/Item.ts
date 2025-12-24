@@ -10,7 +10,7 @@ export default class ItemController {
         try {
             const validatedData = ItemSchema.parse(req.body);
             const newItem = new Item(validatedData.name, validatedData.description, validatedData.price, validatedData.amount)
-            const { success, message } = await this.repository.create(newItem);
+            const {success, message} = await this.repository.create(newItem);
             if (!success) {
                 return res.status(401).json(message);
             }
@@ -30,9 +30,9 @@ export default class ItemController {
     async update(req: Request, res: Response) {
         try {
             const validatedData = ItemSchema.parse(req.body);
-            const { id } = req.params;
+            const {id} = req.params;
             const itemToUpdate = new Item(validatedData.name, validatedData.description, validatedData.price, validatedData.amount)
-            const { success, message } = await this.repository.update(Number(id), itemToUpdate);
+            const {success, message} = await this.repository.update(Number(id), itemToUpdate);
             if (!success) {
                 return res.status(401).json(message);
             }
@@ -45,9 +45,8 @@ export default class ItemController {
         }
     }
     async delete(req: Request, res: Response) {
-        const { id } = req.params;
-        const { success, message } = await this.repository.delete(Number(id));
-
+        const {id} = req.params;
+        const {success, message} = await this.repository.delete(Number(id));
         if (!success) {
             return res.status(400).json(message);
         }

@@ -32,7 +32,7 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
             if (!recipeToUpdate) {
                 return {
                     success: false,
-                    message: "Receita com esse id não encontrada!"
+                    message: "Nenhuma Receita encontrada com esse id!"
                 }
             }
 
@@ -67,7 +67,7 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
             console.log(error);
             return {
                 success: false,
-                message: "Erro ao apagar a receita!"
+                message: "Erro ao deletar a Receita!"
             }
         }
     }

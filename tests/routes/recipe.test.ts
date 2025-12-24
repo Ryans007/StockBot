@@ -27,7 +27,7 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .post("/recipes")
                 .send(newRecipe)
-                .expect(200)
+                .expect(201)
 
             expect(response.body).toBe("Receita criada com sucesso!")
         })
@@ -41,9 +41,9 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .post("/recipes")
                 .send(newRecipe)
-                .expect(401)
+                .expect(400)
 
-            expect(response.body).toBe("Erro ao criar uma Receita!")
+            expect(response.body).toBe("Erro ao criar a Receita!")
         })
 
         it("tentar criar uma nova receita passando tipo inválido no campo name", async () => {
@@ -56,9 +56,9 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .post("/recipes")
                 .send(newRecipe)
-                .expect(401)
+                .expect(400)
 
-            expect(response.body).toBe("Erro ao criar uma Receita!")
+            expect(response.body).toBe("Erro ao criar a Receita!")
         })
 
         it("tentar criar uma nova receita sem informar o método de preparo", async () => {
@@ -70,9 +70,9 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .post("/recipes")
                 .send(newRecipe)
-                .expect(401)
+                .expect(400)
 
-            expect(response.body).toBe("Erro ao criar uma Receita!")
+            expect(response.body).toBe("Erro ao criar a Receita!")
         })
     })
 
@@ -89,7 +89,7 @@ describe("Recipes API", () => {
         it("deve listar todas as receitas com sucesso", async () => {
             const response = await request(app)
                 .get("/recipes")
-                .expect(201)
+                .expect(200)
 
             expect(Array.isArray(response.body)).toBe(true)
             expect(response.body.length).toBeGreaterThan(0)
@@ -98,7 +98,7 @@ describe("Recipes API", () => {
         it("deve retornar receitas com a estrutura correta", async () => {
             const response = await request(app)
                 .get("/recipes")
-                .expect(201)
+                .expect(200)
 
             const recipe = response.body[0]
             expect(recipe).toHaveProperty("id")
@@ -131,7 +131,7 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .put(`/recipes/${createdRecipeId}`)
                 .send(updatedRecipe)
-                .expect(201)
+                .expect(200)
 
             expect(response.body).toBe("Receita atualizada com sucesso!")
         })
@@ -146,7 +146,7 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .put(`/recipes/${createdRecipeId}`)
                 .send(partialUpdate)
-                .expect(201)
+                .expect(200)
 
             expect(response.body).toBe("Receita atualizada com sucesso!")
         })
@@ -161,7 +161,7 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .put("/recipes/999999")
                 .send(updatedRecipe)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Nenhuma Receita encontrada com esse id!")
         })
@@ -176,7 +176,7 @@ describe("Recipes API", () => {
             const response = await request(app)
                 .put(`/recipes/${createdRecipeId}`)
                 .send(invalidUpdate)
-                .expect(401)
+                .expect(400)
 
             expect(response.body).toBe("Erro ao atualizar a Receita!")
         })
@@ -201,7 +201,7 @@ describe("Recipes API", () => {
         it("deve deletar uma receita existente com sucesso", async () => {
             const response = await request(app)
                 .delete(`/recipes/${recipeToDeleteId}`)
-                .expect(201)
+                .expect(200)
 
             expect(response.body).toBe("Receita deletada com sucesso!")
         })
@@ -228,7 +228,7 @@ describe("Recipes API", () => {
                 .delete("/recipes/invalid-id")
                 .expect(400)
 
-            expect(response.body).toBe("Erro ao deletar uma Receita!")
+            expect(response.body).toBe("Erro ao deletar a Receita!")
         })
     })
 })
