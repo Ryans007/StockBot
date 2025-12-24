@@ -16,7 +16,6 @@ export default class ItemRepository implements ItemInterfaceRepository {
                 message: "Item criado com sucesso!"
             }
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao criar um Item!"
@@ -50,7 +49,6 @@ export default class ItemRepository implements ItemInterfaceRepository {
                 message: "Item atualizado com sucesso!"
             }
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao atualizar o Item!"
@@ -74,7 +72,6 @@ export default class ItemRepository implements ItemInterfaceRepository {
             }
 
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao deletar um Item!"

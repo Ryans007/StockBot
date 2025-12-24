@@ -15,7 +15,6 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
                 message: "Receita criada com sucesso!"
             }
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao criar uma Receita!"
@@ -47,7 +46,6 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
                 message: "Receita atualizada com sucesso!"
             }
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao atualizar a Receita!"
@@ -69,7 +67,6 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
                 message: "Receita deletada com sucesso!"
             }
         } catch (error) {
-            console.log(error);
             return {
                 success: false,
                 message: "Erro ao deletar a Receita!"
