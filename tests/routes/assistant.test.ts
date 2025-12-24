@@ -27,12 +27,12 @@ describe("Assistant API", () => {
                 .post("/assistant/send_message")
                 .send(message)
 
-            expect(response.body).toHaveProperty("threadId")
-            expect(response.body).toHaveProperty("userMessage")
-            expect(response.body).toHaveProperty("aiMessage")
-            expect(response.body.userMessage).toBe("Oi, tudo bem?")
-            expect(response.body.aiMessage).toBeDefined()
-            expect(response.body.aiMessage.length).toBeGreaterThan(0)
+            expect(response.body).toHaveProperty("thread_id")
+            expect(response.body).toHaveProperty("user_message")
+            expect(response.body).toHaveProperty("ai_message")
+            expect(response.body.user_message).toBe("Oi, tudo bem?")
+            expect(response.body.ai_message).toBeDefined()
+            expect(response.body.ai_message.length).toBeGreaterThan(0)
 
             threadId = response.body.threadId
         }, 60000)
@@ -47,7 +47,7 @@ describe("Assistant API", () => {
                 .send(message)
                 .expect(400)
 
-            expect(response.body).toBeDefined()
+            expect(response.body).toBe("Erro ao enviar mensagem para o assistente!")
         })
 
         it("tentar enviar mensagem com user_message vazio", async () => {
@@ -58,10 +58,9 @@ describe("Assistant API", () => {
             const response = await request(app)
                 .post("/assistant/send_message")
                 .send(message)
-                .expect(201)
+                .expect(400)
 
-            expect(response.body).toHaveProperty("threadId")
-            expect(response.body).toHaveProperty("aiMessage")
+            expect(response.body).toBe("Erro ao enviar mensagem para o assistente!")
         }, 60000)
 
         it("tentar enviar mensagem com tipo inválido no campo user_message", async () => {
@@ -72,9 +71,9 @@ describe("Assistant API", () => {
             const response = await request(app)
                 .post("/assistant/send_message")
                 .send(message)
-                .expect(500)
+                .expect(400)
 
-            expect(response.body).toBeDefined()
+            expect(response.body).toBe("Erro ao enviar mensagem para o assistente!")
         })
 
         it("tentar enviar mensagem com tipo inválido no campo thread_id", async () => {
@@ -86,9 +85,9 @@ describe("Assistant API", () => {
             const response = await request(app)
                 .post("/assistant/send_message")
                 .send(message)
-                .expect(500)
+                .expect(400)
 
-            expect(response.body).toBeDefined()
+            expect(response.body).toBe("Erro ao enviar mensagem para o assistente!")
         })
 
         it("deve criar novo thread_id quando não fornecido", async () => {
@@ -110,9 +109,9 @@ describe("Assistant API", () => {
                 .send(message2)
                 .expect(201)
 
-            expect(response1.body.threadId).toBeDefined()
-            expect(response2.body.threadId).toBeDefined()
-            expect(response1.body.threadId).not.toBe(response2.body.threadId)
+            expect(response1.body.thread_id).toBeDefined()
+            expect(response2.body.thread_id).toBeDefined()
+            expect(response1.body.thread_id).not.toBe(response2.body.thread_id)
         }, 120000)
     })
 
@@ -127,7 +126,7 @@ describe("Assistant API", () => {
         it("deve retornar o histórico de conversas com sucesso", async () => {
             const response = await request(app)
                 .get("/assistant/history")
-                .expect(201)
+                .expect(200)
 
             expect(Array.isArray(response.body)).toBe(true)
             expect(response.body.length).toBeGreaterThan(0)
@@ -136,13 +135,13 @@ describe("Assistant API", () => {
         it("deve retornar conversas com a estrutura correta", async () => {
             const response = await request(app)
                 .get("/assistant/history")
-                .expect(201)
+                .expect(200)
 
             const conversation = response.body[0]
             expect(conversation).toHaveProperty("id")
-            expect(conversation).toHaveProperty("threadId")
-            expect(conversation).toHaveProperty("userMessage")
-            expect(conversation).toHaveProperty("aiMessage")
+            expect(conversation).toHaveProperty("thread_id")
+            expect(conversation).toHaveProperty("user_message")
+            expect(conversation).toHaveProperty("ai_message")
         })
     })
 })
