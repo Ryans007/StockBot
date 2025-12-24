@@ -13,13 +13,13 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
             await this.repository.save(recipe);
             return {
                 success: true,
-                message: "Receita salva com sucesso!"
+                message: "Receita criada com sucesso!"
             }
         } catch (error) {
             console.log(error);
             return {
                 success: false,
-                message: "Erro ao criar uma receita!"
+                message: "Erro ao criar uma Receita!"
             }
         }
     }
