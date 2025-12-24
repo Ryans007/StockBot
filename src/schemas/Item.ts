@@ -7,4 +7,4 @@ export const ItemSchema = z.object({
   amount: z.number().nonnegative()
 })
 
-export type Item = z.infer<typeof ItemSchema>
+export type Item = z.infer<typeof ItemSchema>;

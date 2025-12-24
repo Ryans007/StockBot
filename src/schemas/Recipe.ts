@@ -6,4 +6,4 @@ export const RecipeSchema = z.object({
     preparationMethod: z.string().min(1).trim()
 })
 
-export type Recipe = z.infer<typeof RecipeSchema>
+export type Recipe = z.infer<typeof RecipeSchema>;

@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import * as crypto from "crypto";
 import graph from "../graph/graph";
 import Conversation from "../entities/Conversation";
+import {ConversationSchema} from "../schemas/Conversation.ts";
 
 interface ChatRequest {
     user_message: string;
