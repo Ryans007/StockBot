@@ -57,8 +57,14 @@ export default class RecipeRepository implements RecipeInterfaceRepository {
     }
     async delete(id: number): Promise<{ success: boolean; message: string }> {
         try {
+            const recipeToDelete = await this.repository.findOneBy({id: id});
+            if (!recipeToDelete) {
+                return {
+                    success: false,
+                    message: "Nenhuma Receita encontrada com esse id!"
+                }
+            }
             await this.repository.delete(id);
-
             return {
                 success: true,
                 message: "Receita deletada com sucesso!"
