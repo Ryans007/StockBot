@@ -1,9 +1,11 @@
 import express from "express";
 import { AppDataSource } from "./config/dataSource";
+import setupSwagger  from './swagger.ts'
 import router from "./routes";
 
 const app = express();
 app.use(express.json());
+setupSwagger(app);
 router(app);
 
 app.get("/", (_, res) => {

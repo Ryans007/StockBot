@@ -1,0 +1,594 @@
+openapi: 3.0.0
+info:
+  title: Bot Estoque API
+  description: |
+    Sistema inteligente de gerenciamento de estoque e receitas culinárias com assistente IA.
+    
+    **Funcionalidades principais:**
+    - Gerenciamento completo de itens do estoque (CRUD)
+    - Gerenciamento de receitas culinárias (CRUD)
+    - Assistente IA conversacional que pode:
+      - Consultar quantidades e preços do estoque
+      - Buscar receitas no banco de dados
+      - Verificar disponibilidade de ingredientes
+      - Pesquisar receitas na internet
+      - Salvar novas receitas
+    
+    **Tecnologias:**
+    - Node.js + Express + TypeScript
+    - TypeORM + SQLite
+    - LangGraph 
+    - Sistema multi-agente (Orchestrator, SQL, Web, Trivial, Structurer, Revisor)
+  version: 1.0.0
+  contact:
+    name: Ryan
+    email: ryansoaresjorvino@gmail.com
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desenvolvimento
+
+tags:
+  - name: Items
+    description: Operações de gerenciamento de itens do estoque
+  - name: Recipes
+    description: Operações de gerenciamento de receitas culinárias
+  - name: Assistant
+    description: Interação com o assistente IA conversacional
+
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - name
+        - price
+        - amount
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+          description: Identificador único do item (gerado automaticamente)
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+          example: "Arroz Branco"
+          description: Nome do item
+        description:
+          type: string
+          maxLength: 500
+          example: "Arroz branco tipo 1, pacote de 5kg"
+          description: Descrição detalhada do item
+        price:
+          type: number
+          format: float
+          minimum: 0
+          example: 25.50
+          description: Preço unitário do item em reais
+        amount:
+          type: number
+          format: float
+          minimum: 0
+          example: 100
+          description: Quantidade disponível no estoque
+
+    Recipe:
+      type: object
+      required:
+        - name
+        - ingredients
+        - preparationMethod
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+          description: Identificador único da receita (gerado automaticamente)
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+          example: "Bolo de Chocolate"
+          description: Nome da receita
+        ingredients:
+          type: string
+          minLength: 1
+          example: "2 xícaras de farinha de trigo, 3 ovos, 200g de chocolate em pó, 1 xícara de açúcar, 1 colher de fermento"
+          description: Lista de ingredientes com suas quantidades
+        preparationMethod:
+          type: string
+          minLength: 1
+          example: "1. Misture os ingredientes secos. 2. Adicione os ovos batidos. 3. Misture bem. 4. Asse em forno pré-aquecido a 180°C por 40 minutos."
+          description: Modo de preparo passo a passo
+
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 85
+          description: Identificador único da conversa (gerado automaticamente)
+        thread_id:
+          type: string
+          format: uuid
+          example: "9f01015f-9662-4b14-a2d6-93fb4d46dabe"
+          description: ID da thread para manter contexto entre mensagens
+        user_message:
+          type: string
+          example: "Quantos ovos tenho no estoque?"
+          description: Mensagem enviada pelo usuário
+        ai_message:
+          type: string
+          example: "Você tem 18 ovos disponíveis no estoque."
+          description: Resposta gerada pelo assistente IA
+
+    ChatRequest:
+      type: object
+      required:
+        - user_message
+      properties:
+        user_message:
+          type: string
+          minLength: 1
+          example: "Quantos ovos tenho no estoque?"
+          description: Mensagem do usuário para o assistente
+        thread_id:
+          type: string
+          format: uuid
+          example: "9f01015f-9662-4b14-a2d6-93fb4d46dabe"
+          description: ID da thread para continuar uma conversa existente (opcional)
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Erro ao processar requisição"
+          description: Mensagem de erro
+
+paths:
+  # ==================== ITEMS ENDPOINTS ====================
+  /items:
+    get:
+      summary: Lista todos os itens
+      description: Retorna uma lista completa com todos os itens cadastrados no estoque
+      tags:
+        - Items
+      responses:
+        '200':
+          description: Lista de itens retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+              example:
+                - id: 1
+                  name: "Arroz Branco"
+                  description: "Arroz branco tipo 1"
+                  price: 25.50
+                  amount: 100
+                - id: 2
+                  name: "Feijão Preto"
+                  description: "Feijão preto tipo 1"
+                  price: 8.50
+                  amount: 200
+                - id: 3
+                  name: "Ovos"
+                  description: "Ovos brancos grandes"
+                  price: 0.80
+                  amount: 18
+
+    post:
+      summary: Cria um novo item
+      description: Adiciona um novo item ao estoque com as informações fornecidas
+      tags:
+        - Items
+      requestBody:
+        required: true
+        description: Dados do item a ser criado
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - price
+                - amount
+              properties:
+                name:
+                  type: string
+                  example: "Café Torrado"
+                description:
+                  type: string
+                  example: "Café torrado e moído, pacote de 500g"
+                price:
+                  type: number
+                  example: 15.00
+                amount:
+                  type: number
+                  example: 50
+      responses:
+        '201':
+          description: Item criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Item criado com sucesso!"
+        '400':
+          description: Dados inválidos ou campo obrigatório faltando
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Erro ao criar um Item!"
+
+  /items/{id}:
+    put:
+      summary: Atualiza um item existente
+      description: Atualiza as informações de um item já cadastrado no estoque
+      tags:
+        - Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID do item a ser atualizado
+          example: 1
+      requestBody:
+        required: true
+        description: Novos dados do item
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - price
+                - amount
+              properties:
+                name:
+                  type: string
+                  example: "Arroz Integral"
+                description:
+                  type: string
+                  example: "Arroz integral tipo 1"
+                price:
+                  type: number
+                  example: 28.00
+                amount:
+                  type: number
+                  example: 150
+      responses:
+        '200':
+          description: Item atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Item atualizado com sucesso!"
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Erro ao atualizar o Item!"
+        '401':
+          description: Item não encontrado
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Nenhum Item encontrado com esse id!"
+
+    delete:
+      summary: Deleta um item
+      description: Remove um item do estoque permanentemente
+      tags:
+        - Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID do item a ser deletado
+          example: 1
+      responses:
+        '200':
+          description: Item deletado com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Item deletado com sucesso!"
+        '400':
+          description: Erro ao deletar item ou item não encontrado
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                notFound:
+                  value: "Nenhum Item encontrado com esse id!"
+                invalidId:
+                  value: "Erro ao deletar um Item!"
+
+  # ==================== RECIPES ENDPOINTS ====================
+  /recipes:
+    get:
+      summary: Lista todas as receitas
+      description: Retorna uma lista completa com todas as receitas cadastradas no banco de dados
+      tags:
+        - Recipes
+      responses:
+        '201':
+          description: Lista de receitas retornada com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
+              example:
+                - id: 1
+                  name: "Bolo de Chocolate"
+                  ingredients: "2 xícaras de farinha, 3 ovos, 200g chocolate"
+                  preparationMethod: "Misture e asse por 40 minutos"
+                - id: 2
+                  name: "Purê de Batata"
+                  ingredients: "1kg batata, 200ml leite, 50g manteiga, sal"
+                  preparationMethod: "Cozinhe as batatas, amasse e misture com leite e manteiga"
+
+    post:
+      summary: Cria uma nova receita
+      description: Adiciona uma nova receita ao banco de dados
+      tags:
+        - Recipes
+      requestBody:
+        required: true
+        description: Dados da receita a ser criada
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - ingredients
+                - preparationMethod
+              properties:
+                name:
+                  type: string
+                  example: "Panqueca Americana"
+                ingredients:
+                  type: string
+                  example: "2 xícaras de farinha, 2 ovos, 1 xícara de leite, 1 colher de fermento"
+                preparationMethod:
+                  type: string
+                  example: "Misture todos os ingredientes. Aqueça uma frigideira e despeje porções da massa. Cozinhe até dourar dos dois lados."
+      responses:
+        '200':
+          description: Receita criada com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Receita criada com sucesso!"
+        '401':
+          description: Dados inválidos ou campo obrigatório faltando
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Erro ao criar uma Receita!"
+
+  /recipes/{id}:
+    put:
+      summary: Atualiza uma receita existente
+      description: Atualiza as informações de uma receita já cadastrada
+      tags:
+        - Recipes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID da receita a ser atualizada
+          example: 1
+      requestBody:
+        required: true
+        description: Novos dados da receita
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - ingredients
+                - preparationMethod
+              properties:
+                name:
+                  type: string
+                  example: "Bolo de Chocolate Gourmet"
+                ingredients:
+                  type: string
+                  example: "2 xícaras de farinha, 3 ovos, 250g chocolate belga"
+                preparationMethod:
+                  type: string
+                  example: "Misture os ingredientes e asse por 45 minutos a 180°C"
+      responses:
+        '201':
+          description: Receita atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Receita atualizada com sucesso!"
+        '401':
+          description: Receita não encontrada ou dados inválidos
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                notFound:
+                  value: "Nenhuma Receita encontrada com esse id!"
+                invalidData:
+                  value: "Erro ao atualizar a Receita!"
+
+    delete:
+      summary: Deleta uma receita
+      description: Remove uma receita do banco de dados permanentemente
+      tags:
+        - Recipes
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID da receita a ser deletada
+          example: 1
+      responses:
+        '201':
+          description: Receita deletada com sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+              example: "Receita deletada com sucesso!"
+        '400':
+          description: Erro ao deletar receita ou receita não encontrada
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                notFound:
+                  value: "Nenhuma Receita encontrada com esse id!"
+                invalidId:
+                  value: "Erro ao deletar uma Receita!"
+
+  # ==================== ASSISTANT ENDPOINTS ====================
+  /assistant/send_message:
+    post:
+      summary: Envia mensagem para o assistente IA
+      description: |
+        Envia uma mensagem de texto para o assistente IA e recebe uma resposta.
+        
+        **O assistente pode:**
+        - Consultar quantidades e preços de itens no estoque
+        - Buscar receitas cadastradas no banco de dados
+        - Verificar se você tem os ingredientes para uma receita
+        - Pesquisar receitas na internet (quando não estão cadastradas)
+        - Salvar novas receitas no banco de dados
+        - Responder perguntas triviais e de ajuda
+        
+        **Sistema de contexto:**
+        - Use `thread_id` para manter contexto entre mensagens
+        - Se não informar `thread_id`, um novo será gerado automaticamente
+        - Mensagens na mesma thread mantêm histórico da conversa
+        
+        **Exemplos de perguntas:**
+        - "Quantos ovos tenho no estoque?"
+        - "Qual a receita de purê de batata?"
+        - "Tenho os ingredientes para fazer bolo de chocolate?"
+        - "Pesquise na internet uma receita de lasanha"
+        - "Salve essa receita de panqueca"
+      tags:
+        - Assistant
+      requestBody:
+        required: true
+        description: Mensagem do usuário e ID da thread (opcional)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+            examples:
+              simpleQuestion:
+                summary: Pergunta simples sobre estoque
+                value:
+                  user_message: "Quantos ovos tenho no estoque?"
+              withContext:
+                summary: Continuando uma conversa
+                value:
+                  user_message: "E tenho leite também?"
+                  thread_id: "9f01015f-9662-4b14-a2d6-93fb4d46dabe"
+              recipeQuestion:
+                summary: Pergunta sobre receita
+                value:
+                  user_message: "Como fazer purê de batata?"
+              webSearch:
+                summary: Busca na internet
+                value:
+                  user_message: "Pesquise na internet uma receita de lasanha"
+      responses:
+        '201':
+          description: Mensagem processada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+              example:
+                id: 85
+                thread_id: "9f01015f-9662-4b14-a2d6-93fb4d46dabe"
+                user_message: "Quantos ovos tenho no estoque?"
+                ai_message: "Você tem 18 ovos disponíveis no estoque."
+        '500':
+          description: Erro ao processar mensagem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /assistant/history:
+    get:
+      summary: Retorna histórico de conversas
+      description: |
+        Lista todas as mensagens trocadas com o assistente IA.
+        
+        **Informações retornadas:**
+        - ID único de cada conversa
+        - Thread ID (agrupa mensagens da mesma conversa)
+        - Mensagem do usuário
+        - Resposta do assistente
+        
+        Útil para:
+        - Visualizar histórico completo
+        - Analisar interações passadas
+        - Recuperar informações de conversas anteriores
+      tags:
+        - Assistant
+      responses:
+        '200':
+          description: Histórico retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Conversation'
+              example:
+                - id: 83
+                  thread_id: "550e8400-e29b-41d4-a716-446655440000"
+                  user_message: "Oi, tudo bem?"
+                  ai_message: "Olá! Tudo ótimo, obrigado! Sou seu assistente de estoque e receitas. Como posso te ajudar hoje?"
+                - id: 84
+                  thread_id: "550e8400-e29b-41d4-a716-446655440000"
+                  user_message: "Quantos ovos tenho?"
+                  ai_message: "Você tem 18 ovos disponíveis no estoque."
+                - id: 85
+                  thread_id: "9f01015f-9662-4b14-a2d6-93fb4d46dabe"
+                  user_message: "Como fazer bolo de chocolate?"
+                  ai_message: "Receita: Bolo de Chocolate\n\nIngredientes:\n• 2 xícaras de farinha de trigo\n• 3 ovos\n• 200g de chocolate em pó\n• 1 xícara de açúcar\n• 1 colher de fermento\n\nModo de preparo:\n1. Misture os ingredientes secos\n2. Adicione os ovos batidos\n3. Asse por 40 minutos a 180°C"
