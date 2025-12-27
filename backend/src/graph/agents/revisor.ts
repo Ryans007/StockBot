@@ -1,5 +1,5 @@
 import { RevisorOutputSchema } from "../schemas/revisor.ts";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import getLLM from "../../config/llmProvider.ts"
 import { createAgent } from "langchain";
 import { readFileSync } from "node:fs";
 import { parse } from "yaml";
@@ -10,10 +10,7 @@ dotenv.config();
 const promptFile = readFileSync('./src/graph/prompts/revisor.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
-const llm = new ChatGoogleGenerativeAI({
-    model: "gemini-2.5-pro",
-    temperature: 0.3,
-})
+const llm = getLLM("HIGH", 0.3)
 
 const revisorAgent = createAgent({
     model: llm,

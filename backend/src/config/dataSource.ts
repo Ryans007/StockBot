@@ -1,9 +1,8 @@
-import {DataSource} from "typeorm";
-import path from "path";
-import Item from "../entities/Item.ts";
-import Recipe from "../entities/Recipe.ts";
 import Conversation from "../entities/Conversation.ts";
-import dotenv from "dotenv";
+import Recipe from "../entities/Recipe.ts";
+import Item from "../entities/Item.ts";
+import {DataSource} from "typeorm";
+import "dotenv/config";
 
 export const AppDataSource = new DataSource({
     type: "postgres",
