@@ -1,4 +1,4 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import getLLM from "../../config/llmProvider.ts"
 import { sqlTools } from "../tools/sqlTools";
 import { createAgent } from "langchain";
 import { readFileSync } from 'fs';
@@ -10,16 +10,11 @@ dotenv.config();
 const promptFile = readFileSync('./src/graph/prompts/sql.yaml', 'utf-8');
 const promptData = parse(promptFile);
 
-const llm = new ChatGoogleGenerativeAI({
-    model: "gemini-2.5-pro",
-    temperature: 0,
-});
+const llm = getLLM("HIGH", 0)
 
 const allTools = [
     ...sqlTools
 ];
-
-const systemPrompt = promptData.sql_prompt;
 
 const sqlAgent = createAgent({
     model: llm,

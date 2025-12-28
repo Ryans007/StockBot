@@ -1,4 +1,4 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import getLLM from "../../config/llmProvider.ts"
 import webTool from "../tools/webTool";
 import { createAgent } from "langchain";
 import { readFileSync } from "node:fs";
@@ -10,10 +10,7 @@ dotenv.config();
 const promptFile = readFileSync('./src/graph/prompts/web.yaml', 'utf-8')
 const promptData = parse(promptFile);
 
-const llm = new ChatGoogleGenerativeAI({
-    model: "gemini-2.5-pro",
-    temperature: 0.2,
-})
+const llm = getLLM("HIGH", 0.2)
 
 const webAgent = createAgent({
     model: llm,
